@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - run: mkdir -r dir/subdir-${{ matrix.shard }}
+      - run: mkdir -p dir/subdir-${{ matrix.shard }}
 
       - run: touch dir/subdir-${{ matrix.shard }}/file-${{ matrix.shard }}.txt
 
