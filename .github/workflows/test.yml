@@ -13,10 +13,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - run: mkdir dir
-      - run: touch dir/file-${{ matrix.shard }}.txt
+      - run: mkdir dir/subdir-${{ matrix.shard }}
 
-      - name: Upload code coverage results
+      - run: touch dir/subdir-${{ matrix.shard }}/file-${{ matrix.shard }}.txt
+
+      - name: Upload results
         uses: actions/upload-artifact@v3
         with:
           name: test-artifact
@@ -29,11 +30,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Upload code coverage results
+      - name: Download results
         uses: actions/download-artifact@v3
         with:
           name: test-artifact
           path: ./dir
 
-      - run: ls -R
+      - run: ls -alR
         working-directory: ./dir
