@@ -1,0 +1,39 @@
+name: Test artifact
+
+on:
+  push:
+
+jobs:
+  test-artifact:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        shard: [1, 2]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - run: mkdir dir
+      - run: touch file-${{ matrix.shard }}.txt
+
+      - name: Upload code coverage results
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-artifact
+          path: ./dir
+
+  print-artifact:
+    runs-on: ubuntu-latest
+    needs:
+      - test-artifact
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Upload code coverage results
+        uses: actions/download-artifact@v3
+        with:
+          name: test-artifact
+          path: ./dir
+
+      - run: ls -R
+        working-directory: ./dir
