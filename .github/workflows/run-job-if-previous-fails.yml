@@ -16,7 +16,7 @@ jobs:
 
   job-2:
     runs-on: ubuntu-latest
-    if: ${{ success() || failure() }}
+    # if: ${{ success() || failure() }}
     needs:
       - job-1
     steps:
